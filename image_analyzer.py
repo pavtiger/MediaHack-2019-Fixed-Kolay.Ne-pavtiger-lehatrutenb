@@ -35,3 +35,5 @@ if __name__ == '__main__':
 
     text = get_text_on_image(img)
     web_entires = report(annotate(img))
+
+    print(web_entires)
