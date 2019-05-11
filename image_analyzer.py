@@ -1,36 +1,37 @@
 from PIL import Image
 from pytesseract import image_to_string
 import io
-import os
 from google.cloud import vision
 from google.cloud.vision import types
 
+def annotate(path):
+    client = vision.ImageAnnotatorClient()
+
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+
+    image = types.Image(content=content)
+
+    web_detection = client.web_detection(image=image).web_detection
+
+    return web_detection
+
+def report(annotations):
+    ret = {}
+
+    if annotations.web_entities:
+        for entity in annotations.web_entities:
+            ret[entity.description] = entity.score
+
+    return ret
+
 def get_text_on_image(img):
-	image = Image.open(img, mode='r')
-	print(image_to_string(image, lang='rus'))
+    image = Image.open(img, mode='r')
+    
+    return image_to_string(image, lang='rus')
 
-def get_image_tags(img):
-	client = vision.ImageAnnotatorClient()
+if __name__ == '__main__':
+    img = 'tyan.jpg'
 
-	file_name = os.path.join(
-    	os.path.dirname(__file__),
-    	img)
-
-	with io.open(file_name, 'rb') as image_file:
-	    content = image_file.read()
-
-	image = types.Image(content=content)
-
-	response = client.label_detection(image=image)
-	labels = response.label_annotations
-
-	print('Labels:')
-	for label in labels:
-	    print(label.description)
-
-if __name__ == "__main__":
-	text_on_image = get_text_on_image(img)
-	image_tags = get_image_tags(img)
-
-	print(get_text_on_image)
-	print(get_image_tags)
+    text = get_text_on_image(img)
+    web_entires = report(annotate(img))
