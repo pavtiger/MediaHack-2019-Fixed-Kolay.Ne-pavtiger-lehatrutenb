@@ -8,6 +8,8 @@ def compile(string):
     return string.lower().replace(',', '').replace('.', '').replace('!', '').replace('?', '').replace('/', '')
 
 def check_text(txt, tags):
+    """ Takes text and tags to search.
+    Returns True if text has tags in it, and False if not """
     txt = compile(txt).split(' ')
     summ = 0
     for tagWord in tags:
@@ -18,5 +20,5 @@ def check_text(txt, tags):
     return summ >= 1
 
 if __name__ == "__main__":
-    strr = "В последнее время редактор XDA Developers, Мишал Рахмана, проделал большую работу, выискивая кодовые имена и краткие спецификации предполагаемых смартфонов и планшетов. Недавно он натолкнулся на несколько новых устро//йств Huawei, и теперь у него есть пара из"
-    print(check_text(strr, ['XзA Developers', 'Мышал Рахмана']))
+    strr = "В последнее время редактор XDA Developers, Мишал Рахман, проделал большую работу, выискивая кодовые имена и краткие спецификации предполагаемых смартфонов и планшетов. Недавно он натолкнулся на несколько новых устройств Huawei, и теперь у него есть пара из"
+    print(check_text(strr, []))
