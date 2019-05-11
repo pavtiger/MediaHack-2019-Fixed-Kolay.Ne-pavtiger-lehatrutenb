@@ -32,6 +32,11 @@ def get_text_on_image(img):
     return image_to_string(image, lang='rus')
 
 def check_picture(img, tag):
+    """ Takes image and tags.
+    Returns: True if image have
+    ratio with tags,
+    False if not """
+
     text_on_image = get_text_on_image(img)
     if(check_text(text_on_image, tag)):
         return True
