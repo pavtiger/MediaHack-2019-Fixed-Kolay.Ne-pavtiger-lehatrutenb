@@ -31,3 +31,6 @@ def get_image_tags(img):
 if __name__ == "__main__":
 	text_on_image = get_text_on_image(img)
 	image_tags = get_image_tags(img)
+
+	print(get_text_on_image)
+	print(get_image_tags)
