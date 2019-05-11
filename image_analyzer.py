@@ -29,7 +29,7 @@ def report(annotations):
 def get_text_on_image(img):
     image = Image.open(img, mode='r')
     
-    return image_to_string(image, lang='rus')
+    return image_to_string(image, lang='eng')
 
 def check_picture(img, tag):
     """ Takes image and tags.
@@ -40,7 +40,7 @@ def check_picture(img, tag):
     text_on_image = get_text_on_image(img)
     if(check_text(text_on_image, tag)):
         return True
-    web_entires = report(annotate(img))
+    web_entries = report(annotate(img))
     if(check_text(' '.join(web_entires))):
         return True
     return False
@@ -49,4 +49,4 @@ if __name__ == '__main__':
     img = 'tyan.jpg'
 
     text = get_text_on_image(img)
-    web_entires = report(annotate(img))
+    web_entries = report(annotate(img))
