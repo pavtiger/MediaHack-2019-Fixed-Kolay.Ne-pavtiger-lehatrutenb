@@ -28,4 +28,6 @@ def get_image_tags(img):
 	for label in labels:
 	    print(label.description)
 
-get_text_on_image('some1.jpg')
+if __name__ == "__main__":
+	text_on_image = get_text_on_image(img)
+	image_tags = get_image_tags(img)
