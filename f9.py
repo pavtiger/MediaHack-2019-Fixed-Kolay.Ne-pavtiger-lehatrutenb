@@ -67,7 +67,4 @@ def get_filtered_public_posts(token, tags, pub_id, count=100):
     return [x for x in posts if x is not None]
 
 if __name__ == "__main__":
-    token = '1'
-    #gl.public_posts(tokken, 0, 1, ['fd', 'fg', 'tr'], 'tnull')
-    #print(get_filtered_news(token,  ['fd', 'fg', 'tr']))
-    print(get_filtered_news_public_posts(token, ['fd', 'fg', 'tr'], 'tnull'))
+    pass
