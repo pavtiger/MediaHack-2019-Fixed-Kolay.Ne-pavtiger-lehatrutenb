@@ -35,16 +35,14 @@ def get_filtered_news(token, tags, count = 100):
 
     return [x for x in posts if x != None]
 
-def get_filtered_public_posts(token, count, tags, pub_id):
+def get_filtered_public_posts(token, tags, pub_id, count=100):
     """
-        Not worked
         :param token: string
         :param count: int(100)
         :param tags: ['', '', ''...]
         :return:
         filtered posts
         """
-
     vk = vk_api.VkApi(token=token)
     data = vk.method('newsfeed.get', {'count': count, 'filters': 'post', 'source_ids': pub_id})
     posts = data['items']
@@ -66,10 +64,10 @@ def get_filtered_public_posts(token, count, tags, pub_id):
                     if check_picture('file01.jpg', tags):
                         post = None
 
-    return [x for x in posts if x != None]
+    return [x for x in posts if x is not None]
 
 if __name__ == "__main__":
-    token = 'afa8e55a5ad746e93eae9ae53d7f8089067dcc6c8b4be7fbc5805bbd871e54c508596526f7fa462b8b1ec'
+    token = '1'
     #gl.public_posts(tokken, 0, 1, ['fd', 'fg', 'tr'], 'tnull')
     #print(get_filtered_news(token,  ['fd', 'fg', 'tr']))
     print(get_filtered_news_public_posts(token, ['fd', 'fg', 'tr'], 'tnull'))
