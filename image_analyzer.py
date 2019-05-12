@@ -4,7 +4,6 @@ import io
 from google.cloud import vision
 from google.cloud.vision import types
 from google.cloud import translate
-from google.cloud import translate
 from text_analyzer import check_text
 from os import environ
 
