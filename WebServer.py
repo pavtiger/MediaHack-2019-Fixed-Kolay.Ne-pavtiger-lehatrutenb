@@ -16,16 +16,14 @@ def get_popular_tags_():
 @app.route('/get_filtered_news', methods=['POST'])
 def get_filtered_news_():
     token = flask.request.form['token']
-    count = flask.request.form['count']
     tags = flask.request.form['tags']
-    return vericstrong.dumps(get_filtered_news(token=token, count=count, tags=tags))
+    return vericstrong.dumps(get_filtered_news(token=token, tags=tags))
 
 @app.route('/get_filtered_public_posts', methods=['POST'])
 def get_filtered_public_posts_():
     token = flask.request.form['token']
-    count = flask.request.form['count']
     public_id = flask.request.form['public_id']
     tags = flask.request.form['tags']
-    return vericstrong.dumps(get_filtered_public_posts(token=token, count=count, tags=tags, public_id=public_id))
+    return vericstrong.dumps(get_filtered_public_posts(token=token, tags=tags, public_id=public_id))
 
 app.run('0.0.0.0', port=5000)

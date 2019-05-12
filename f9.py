@@ -3,7 +3,7 @@ import urllib
 from text_analyzer import check_text
 from image_analyzer import check_picture
 
-def get_filtered_news(token, tags, count = 100):
+def get_filtered_news(token, tags, count=100):
     """
     :param token: string
     :param count: int(100)
