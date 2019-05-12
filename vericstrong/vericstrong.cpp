@@ -7,58 +7,62 @@ namespace py = pybind11;
 #include <vector>
 #include <string>
 
-std::string dumps(const std::vector<std::string> &obj)
+
+namespace VericStrong
 {
-	std::string ans = "";
-	for(const std::string &s : obj)
+	std::string dumps(const std::vector<std::string> &obj)
 	{
-		ans += '"';
-		for(const char &c : s)
+		std::string ans = "";
+		for(const std::string &s : obj)
 		{
-			if((c != '\\') && (c != '"'))
-				ans += c;
-			else
+			ans += '"';
+			for(const char &c : s)
 			{
-				ans += '\\';
-				ans += c;
+				if((c != '\\') && (c != '"'))
+					ans += c;
+				else
+				{
+					ans += '\\';
+					ans += c;
+				}
 			}
 		}
+		return ans;
 	}
-	return ans;
-}
 
-std::vector<std::string> loads(const std::string &dump)
-{
-	std::vector<std::string> ans;
-	bool backslash = 0;
-	for(const char &c : dump)
+	std::vector<std::string> loads(const std::string &dump)
 	{
-		if(backslash)
+		std::vector<std::string> ans;
+		bool backslash = 0;
+		for(const char &c : dump)
 		{
-			ans.back() += c;
-			backslash = 0;
-			continue;
+			if(backslash)
+			{
+				ans.back() += c;
+				backslash = 0;
+				continue;
+			}
+			switch(c)
+			{
+			case '"':
+				ans.push_back("");
+				break;
+			case '\\':
+				backslash = true;
+				break;
+			default:
+				ans.back() += c;
+			}
 		}
-		switch(c)
-		{
-		case '"':
-			ans.push_back("");
-			break;
-		case '\\':
-			backslash = true;
-			break;
-		default:
-			ans.back() += c;
-		}
+		return ans;
 	}
-	return ans;
 }
 
 #ifdef python
 PYBIND11_MODULE(vericstrong, m)
 {
 	m.doc() = "VericStrong module for dumping vectors of strings into strings and back";
-	m.def("dumps", &dumps, "A function for dumping a vector of strings");
-	m.def("loads", &loads, "A function for back loagins the vector of strings from a string");
+	m.def("dumps", &VericStrong::dumps, "A function for dumping a vector of strings");
+	m.def("loads", &VericStrong::loads, "A function for back loagins the vector of strings from a string");
 }
 #endif
