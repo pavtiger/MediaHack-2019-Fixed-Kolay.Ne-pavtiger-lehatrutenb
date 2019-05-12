@@ -3,7 +3,7 @@ import urllib
 from text_analyzer import check_text
 from image_analyzer import check_picture
 
-def get_filtered_news(token, tags, count=100):
+def get_filtered_news(token, tags, count = 100):
     """
     :param token: string
     :param count: int(100)
@@ -44,7 +44,8 @@ def get_filtered_public_posts(token, tags, pub_id, count=100):
         filtered posts
         """
     vk = vk_api.VkApi(token=token)
-    data = vk.method('newsfeed.get', {'count': count, 'filters': 'post', 'source_ids': pub_id})
+    pub_id = vk.method('groups.getById', {'group_id': pub_id})[0]['id']
+    data = vk.method('newsfeed.get', {'count': count, 'filters': 'post', 'source_ids': '-' + str(pub_id)})
     posts = data['items']
 
     for post in posts:
