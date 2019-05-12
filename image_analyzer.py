@@ -6,6 +6,10 @@ from google.cloud.vision import types
 from google.cloud import translate
 from google.cloud import translate
 from text_analyzer import check_text
+from os import environ
+
+if('GOOGLE_APPLICATION_CREDENTIALS' not in environ.keys()):
+    environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Kogora-f0b0418501ac.json'
 
 def translation(text, target='ru'):
     translate_client = translate.Client()
