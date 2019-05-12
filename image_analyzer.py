@@ -4,6 +4,10 @@ import io
 from google.cloud import vision
 from google.cloud.vision import types
 from text_analyzer import check_text
+from os import environ
+
+if('GOOGLE_APPLICATION_CREDENTIALS' not in environ.keys()):
+    environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Kogora-f0b0418501ac.json'
 
 def annotate(path):
     client = vision.ImageAnnotatorClient()
