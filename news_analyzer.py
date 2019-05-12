@@ -34,7 +34,7 @@ def get_popular_tags():
             with open("stop words.txt", "r") as f:
                 stop_words = f.read().split()
             top_headlines = collector.newsapi.get_top_headlines(language='ru')['articles']
-            descriptions = ''.join([x for x in ' '.join(article['description'] for article in top_headlines) if (x.isalpha() or x in [' ', '-'])]).split()
+            descriptions = ''.join([x for x in ' '.join(article['description'] for article in top_headlines) if (x.isalpha() or x in [' ', '-'])]).replace('- ', ' ').replace(' -', ' ').split()
             morphy = MorphAnalyzer()
             descriptions = [morphy.parse(x)[0].normal_form for x in descriptions]
             uniq = {}
