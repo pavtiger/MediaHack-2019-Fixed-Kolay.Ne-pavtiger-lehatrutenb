@@ -2,6 +2,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 namespace py = pybind11;
+#else
+#include <stdexcept>
 #endif
 
 #include <vector>
@@ -33,26 +35,33 @@ namespace VericStrong
 	std::vector<std::string> loads(const std::string &dump)
 	{
 		std::vector<std::string> ans;
-		bool backslash = 0;
-		for(const char &c : dump)
+		try
 		{
-			if(backslash)
+			bool backslash = 0;
+			for(const char &c : dump)
 			{
-				ans.back() += c;
-				backslash = 0;
-				continue;
+				if(backslash)
+				{
+					ans.back() += c;
+					backslash = 0;
+					continue;
+				}
+				switch(c)
+				{
+				case '"':
+					ans.push_back("");
+					break;
+				case '\\':
+					backslash = true;
+					break;
+				default:
+					ans.at(ans.size() - 1) += c;
+				}
 			}
-			switch(c)
-			{
-			case '"':
-				ans.push_back("");
-				break;
-			case '\\':
-				backslash = true;
-				break;
-			default:
-				ans.back() += c;
-			}
+		}
+		catch(...)
+		{
+			throw std::invalid_argument("The given argument is not a VericStrong string");
 		}
 		return ans;
 	}
